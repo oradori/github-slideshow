@@ -1,0 +1,8 @@
+pandas>=2.0
+numpy>=1.26
+PyYAML>=6.0
+requests>=2.31
+python-dotenv>=1.0
+finance-datareader>=0.9.50
+yfinance>=0.2.40
+pytest>=8.0
