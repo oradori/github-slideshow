@@ -1,0 +1,33 @@
+name: Daily Stock Signals
+
+on:
+  schedule:
+    # 22:00 UTC = 07:00 KST (다음날) — 한국장(15:30 KST 마감)과 미국장(21:00~22:00 UTC 마감) 이후
+    - cron: "0 22 * * 1-5"
+  workflow_dispatch: {}
+
+jobs:
+  run-signals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Restore Kakao token (optional)
+        if: ${{ secrets.KAKAO_TOKEN_JSON != '' }}
+        run: echo '${{ secrets.KAKAO_TOKEN_JSON }}' > kakao_token.json
+
+      - name: Run daily signal check
+        env:
+          NOTIFY_CHANNELS: ${{ secrets.NOTIFY_CHANNELS }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
+        run: python scripts/run_daily.py

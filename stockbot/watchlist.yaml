@@ -1,0 +1,13 @@
+# 관심종목 목록. ticker는 각 데이터 소스가 인식하는 코드 형식을 그대로 사용합니다.
+# 국내: FinanceDataReader 6자리 종목코드 (예: 005930 = 삼성전자)
+# 미국: yfinance 티커 심볼 (예: AAPL)
+kr:
+  - code: "005930"
+    name: "삼성전자"
+  - code: "000660"
+    name: "SK하이닉스"
+us:
+  - code: "AAPL"
+    name: "Apple"
+  - code: "MSFT"
+    name: "Microsoft"
